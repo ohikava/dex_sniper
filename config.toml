@@ -1,0 +1,7 @@
+min_liquidity = 3000
+min_holders = 50
+min_mcap = 20000
+max_top_holders_ratio = 0.3
+renounced_mint = 1
+burn_rate = 1.0
+renounced_freeze = 1
