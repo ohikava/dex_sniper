@@ -107,6 +107,6 @@ export class Sniper {
     public async snipe(token: TokenInterface, client: TelegramClient) {
         logger.info(`Sniping token: ${token.ca}`);
 
-        await client.sendMessage("me", { message: "Hello!" });
+        await client.sendMessage(this.config.sniper_url, { message: token.ca });
     }
 }

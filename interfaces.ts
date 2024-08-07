@@ -17,4 +17,6 @@ export interface Config {
     renounced_mint: number;
     burn_rate: number;
     renounced_freeze: number;
+    sniper_url: string;
+    channels: string[];
 }

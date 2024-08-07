@@ -5,3 +5,5 @@ max_top_holders_ratio = 0.3
 renounced_mint = 1
 burn_rate = 1.0
 renounced_freeze = 1
+sniper_url = "@achilles_trojanbot"
+channels = ["@sadlfsadf", "@dexpaidpump"]

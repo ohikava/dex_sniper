@@ -63,5 +63,5 @@ const storeSession = new StoreSession("my_session"); // fill this later with the
             await sniper.snipe(tokenInfo, client);
             }
         })();
-  }, new NewMessage({"chats": ["@sadlfsadf"]}));
+  }, new NewMessage({"chats": config.channels}));
 })();
