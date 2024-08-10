@@ -8,6 +8,7 @@ import * as toml from 'toml';
 import "dotenv/config";
 import input from "input";
 import * as logger from "./logger";
+import { round } from "./utils";
 
 const seenTokens = new Set<string>();
 
@@ -56,9 +57,9 @@ const storeSession = new StoreSession("my_session"); // fill this later with the
 
         (async () => {
         tokenInfo = await sniper.fillExtraInfo(tokenInfo.ca, tokenInfo);
-        
+        logger.info(`new token: ${tokenInfo.ca} ${tokenInfo.mcap} ${round(tokenInfo.liq, 2)} ${tokenInfo.holders} ${round(tokenInfo.top_holders_rate, 4)} ${tokenInfo.renounced_mint} ${tokenInfo.renounced_freeze} ${tokenInfo.burn_rate}`);
         const shouldSnipe = sniper.filterToken(tokenInfo);
-
+        
         if (shouldSnipe) {
             await sniper.snipe(tokenInfo, client);
             }

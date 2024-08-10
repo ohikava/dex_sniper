@@ -7,3 +7,8 @@ export function isEmpty(obj: object): boolean {
   
     return true;
   }
+
+export function round(num: number, decimals: number): number {
+    var decimals = 10 ** decimals;
+    return Math.round((num + Number.EPSILON) * decimals) / decimals;
+}

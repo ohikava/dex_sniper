@@ -1,5 +1,5 @@
 import {TokenInterface, Config} from "./interfaces";
-import { isEmpty } from "./utils";
+import { isEmpty, round } from "./utils";
 import * as logger from "./logger";
 import { TelegramClient } from "telegram";
 
@@ -53,23 +53,28 @@ export class Sniper {
     }
 
     public async fillExtraInfo(ca: string, template: TokenInterface) {
-        
-        const r = await fetch(`https://gmgn.ai/defi/quotation/v1/tokens/security/sol/${ca}`);
-        let body = await r.json();
-        body = body.data ?? {};
-        body = body.goplus ?? {};
+        try {
+            const r = await fetch(`https://gmgn.ai/defi/quotation/v1/tokens/security/sol/${ca}`);
+            let body = await r.json();
+            body = body.data ?? {};
+            body = body.goplus ?? {};
 
-        if (isEmpty(body)) {
-            logger.error(`No data found for CA: ${ca}`);
+            if (isEmpty(body)) {
+                logger.error(`No data found for CA: ${ca}`);
+                return template;
+            }
+
+            template['liq'] = body['liquidity'];
+            template['top_holders_rate'] = body['top_10_holder_rate'];
+            template['renounced_mint'] = body['renounced_mint'];
+            template['burn_rate'] = Number.parseFloat(body.burn_ratio ?? "0");
+            template['renounced_freeze'] = body['renounced_freeze_account'];
+            return template;
+        } catch (e) {
+            logger.error(`error fetching data for CA: ${ca}, ${e}`);
             return template;
         }
-
-        template['liq'] = body['liquidity'];
-        template['top_holders_rate'] = body['top_10_holder_rate'];
-        template['renounced_mint'] = body['renounced_mint'];
-        template['burn_rate'] = Number.parseFloat(body.burn_ratio ?? "0");
-        template['renounced_freeze'] = body['renounced_freeze_account'];
-        return template;
+        
     }
 
     public filterToken(token: TokenInterface): boolean {
@@ -105,8 +110,13 @@ export class Sniper {
     }
 
     public async snipe(token: TokenInterface, client: TelegramClient) {
-        logger.info(`Sniping token: ${token.ca}`);
+        logger.info(`sniping token: ${token.ca}`);
 
         await client.sendMessage(this.config.sniper_url, { message: token.ca });
+        for(let i = 0; i < this.config.logging_channels.length; i ++) {
+            const currentLogginChannel = this.config.logging_channels[i];
+
+            await client.sendMessage(currentLogginChannel, {message:`${token.ca}\nMCAP: $${round(token.mcap, 2)}\nLIQ: $${round(token.liq, 2)}\nHOLDERS: ${token.holders}\nHOLDERS_RATE: ${round(token.top_holders_rate, 4)}`})
+        }
     }
 }

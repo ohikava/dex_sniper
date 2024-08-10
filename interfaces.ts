@@ -19,4 +19,5 @@ export interface Config {
     renounced_freeze: number;
     sniper_url: string;
     channels: string[];
+    logging_channels: string[];
 }

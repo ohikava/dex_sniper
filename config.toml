@@ -6,4 +6,5 @@ renounced_mint = 1
 burn_rate = 1.0
 renounced_freeze = 1
 sniper_url = "@achilles_trojanbot"
-channels = ["@sadlfsadf", "@dexpaidpump"]
+channels = ["@sadlfsadf", "@dexpaidpump", "@asdfcvbul"]
+logging_channels = [-1002195740808]

@@ -50,6 +50,7 @@ function formatMessage(level: 'DEBUG' | 'INFO' | 'ERROR', message: string, color
     if (!colors) {
         return `[${now}] [${level}] ${filePath}: ${message}`;
     }
+    
     return levelColor.replace('%s', `[${now}] [${level}] ${filePath}: ${message}`);
 }
 
