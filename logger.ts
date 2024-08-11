@@ -1,18 +1,18 @@
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
 
-const LOGS_DIR = './logs';
+// const LOGS_DIR = './logs';
 
-function getCurrentFileName(): string {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
+// function getCurrentFileName(): string {
+//     let today = new Date();
+//     let dd = String(today.getDate()).padStart(2, '0');
+//     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+//     let yyyy = today.getFullYear();
 
-    let today_row = mm + '-' + dd + '-' + yyyy;
+//     let today_row = mm + '-' + dd + '-' + yyyy;
 
-    return `${LOGS_DIR}/${today_row}.log`;
-}
+//     return `${LOGS_DIR}/${today_row}.log`;
+// }
 
 
 export var globallevel = {
@@ -21,12 +21,13 @@ export var globallevel = {
 
 
 export function writeToFile(message: string) {
-    fs.appendFile(getCurrentFileName(), message + '\n', (err: any) => {
-        if (err) {
-            console.error(err);
-        }
-    }
-    );
+    return ;
+    // fs.appendFile(getCurrentFileName(), message + '\n', (err: any) => {
+    //     if (err) {
+    //         console.error(err);
+    //     }
+    // }
+    // );
 }
 
 const LEVELS = ['DEBUG', 'INFO', 'ERROR'];
