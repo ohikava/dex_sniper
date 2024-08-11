@@ -82,6 +82,10 @@ export class Sniper {
             return false;
         }
 
+        if (token.mcap > this.config.max_mcap) {
+            return false;
+        }
+        
         if (token.holders < this.config.min_holders) {
             return false;
         }
